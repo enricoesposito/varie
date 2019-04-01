@@ -1,0 +1,81 @@
+1) Per un Volume è presente una sola fee Base
+
+DATO il Volume (operatività)
+									|activity_code|	channel_code|	process_channel_code|	mkt_prov |	causale_operazione 	|	deposito|	cross_external_code |csd_sgss	|	piazza_movimento_cad|	borsa_titolo_cad|	flag_tardive|	flag_repatriation	|	flag_repair	|	num_rep_cli	|	flusso_ttit	|	paese_fatt	|
+									|REGO         |OTC          |                       |			 |						|			|	T2SFOREIGN			|			|	160					|					|				|						|				|				|				|	EUR			|
+E il superNDG 123456
+E il periodo 01-19
+E i criteri 
+|Tipo|Periodo	 | SuperNDG         |activity_code|	channel_code|	process_channel_code|	mkt_prov |	causale_operazione 	|	deposito|	cross_external_code |csd_sgss	|	piazza_movimento_cad|	borsa_titolo_cad|	flag_tardive|	flag_repatriation	|	flag_repair	|	num_rep_cli	|	flusso_ttit	|	paese_fatt	| Prezzo |
+|Base|01-19      |123456            |REGO         |OTC          |                       |			 |						|			|	T2SFOREIGN			|			|	≠(140,150)			|					|				|						|				|				|				|	IN(EUR,GR)	|2       |
+|Base|01-19      |123456            |REGO         |OTC          |                       |	CLIENTE	 |						|			|	T2SFOREIGN			|			|	≠(140,150)			|					|				|						|				|				|				|	IN(EUR,GR)	|21      |
+|Base|01-19      |123456			|REGO         |OTC          |                       |			 |						|			|	T2SFOREIGN			|			|	≠(140,150)			|					|				|						|				|				|				|	≠(EUR,GR)	|10      |
+|Base|01-19      |123456			|CANC         |OTC          |                       |			 |						|			|	T2SFOREIGN			|			|	≠(140,150)			|					|				|						|				|				|				|	IN(EUR,GR)	|10      |
+|Base|01-19      |888888			|REGO         |OTC          |                       |			 |						|			|	T2SFOREIGN			|			|	≠(140,150)			|					|				|						|				|				|				|	IN(EUR,GR)	|3       |
+|Base|12-18      |123456			|REGO         |OTC          |                       |			 |						|			|	T2SFOREIGN			|			|	≠(140,150)			|					|				|						|				|				|				|	IN(EUR,GR)	|4       |
+Quando l'utente chiede di conoscere la Fee per il Volume specificato
+Allora otterrà la Fee con valore 2
+
+ 
+ 
+
+ 
+
+2) Per un Volume sono presenti due fee Base
+
+ 
+DATO il Volume (operatività)
+									|activity_code|	channel_code|	process_channel_code|	mkt_prov |	causale_operazione 	|	deposito|	cross_external_code |csd_sgss	|	piazza_movimento_cad|	borsa_titolo_cad|	flag_tardive|	flag_repatriation	|	flag_repair	|	num_rep_cli	|	flusso_ttit	|	paese_fatt	|
+									|REGO         |OTC          |                       |			 |						|			|	T2SFOREIGN			|			|	160					|					|				|						|				|				|				|	EUR			|
+E il superNDG 123456
+E il periodo 01-19
+E la Fee Schedule Base
+|Tipo|Periodo	 | SuperNDG         |activity_code|	channel_code|	process_channel_code|	mkt_prov |	causale_operazione 	|	deposito|	cross_external_code |csd_sgss	|	piazza_movimento_cad|	borsa_titolo_cad|	flag_tardive|	flag_repatriation	|	flag_repair	|	num_rep_cli	|	flusso_ttit	|	paese_fatt	| Prezzo |
+|Base|01-19      |123456            |REGO         |OTC          |                       |			 |						|			|	T2SFOREIGN			|			|	≠(140,150)			|					|				|						|				|				|				|	IN(EUR,GR)	|2       |
+|Base|01-19      |123456            |         	  |OTC          |                       |			 |						|			|	T2SFOREIGN			|			|	≠(140,150)			|					|				|						|				|				|				|	IN(EUR,GR)	|16       |
+|Base|01-19      |123456            |REGO         |OTC          |                       |	CLIENTE	 |						|			|	T2SFOREIGN			|			|	≠(140,150)			|					|				|						|				|				|				|	IN(EUR,GR)	|21      |
+|Base|01-19      |123456			|CANC         |OTC          |                       |			 |						|			|	T2SFOREIGN			|			|	≠(140,150)			|					|				|						|				|				|				|	≠(EUR,GR)	|10      |
+|Base|01-19      |123456			|CANC         |OTC          |                       |			 |						|			|	T2SFOREIGN			|			|	≠(140,150)			|					|				|						|				|				|				|	IN(EUR,GR)	|10      |
+Quando l'utente chiede di conoscere i prezzi delle Fee per il Volume specificato
+Allora otterrà le Fee con valore 2,16
+E un messaggio di warning 'è stata trovata più di una Fee Base'
+
+ 
+
+ 
+
+3) Per un Volume sono presenti più Fee di cui una Base e le altre Aggiuntive
+
+ 
+
+DATO il Volume (operatività)
+											|activity_code|	channel_code|	process_channel_code|	mkt_prov |	causale_operazione 	|	deposito|	cross_external_code |csd_sgss	|	piazza_movimento_cad|	borsa_titolo_cad|	flag_tardive|	flag_repatriation	|	flag_repair	|	num_rep_cli	|	flusso_ttit	|	paese_fatt	|
+											|REGO         |OTC          | MAN                   |			 |	ABC					|			|	T2SFOREIGN			|			|	160					|					|				|						|				|				|				|	EUR			|
+E il superNDG 123456
+E il periodo 01-19
+E la Fee Schedule Base
+|Tipo		|Periodo	 | SuperNDG         |activity_code|	channel_code|	process_channel_code|	mkt_prov |	causale_operazione 	|	deposito|	cross_external_code |csd_sgss	|	piazza_movimento_cad|	borsa_titolo_cad|	flag_tardive|	flag_repatriation	|	flag_repair	|	num_rep_cli	|	flusso_ttit	|	paese_fatt	| Prezzo |
+|Base		|01-19      |123456            	|REGO         |OTC          |                       |			 |						|			|	T2SFOREIGN			|			|	≠(140,150)			|					|				|						|				|				|				|	IN(EUR,GR)	|2       |
+E le Fee Schedule Aggiuntive
+|Tipo		|Periodo	 | SuperNDG         |activity_code|	channel_code|	process_channel_code|	mkt_prov |	causale_operazione 	|	deposito|	cross_external_code |csd_sgss	|	piazza_movimento_cad|	borsa_titolo_cad|	flag_tardive|	flag_repatriation	|	flag_repair	|	num_rep_cli	|	flusso_ttit	|	paese_fatt	| Prezzo |
+|Aggiuntivo	|01-19       |123456         	|         	  |          	| MAN                  	|			 |						|			|						|			|						|					|				|						|				|				|				|				|25       |
+|Aggiuntivo	|01-19       |123456         	|	          |	            | MAN                   |			 |	ABC					|			|						|			|						|					|				|						|				|				|				|				|30       |                      |
+Quando l'applicazione chiede di conoscere i prezzi delle Fee per il Volume specificato
+Allora l'applicazione otterrà i Prezzi 2, 25, 30
+
+ 
+
+4) Per un Volume è presente una sola fee Base, versione con tutti gli operatori logici !IN, !=, IN
+
+DATO il Volume (operatività)
+									|activity_code|	channel_code|	process_channel_code|	mkt_prov |	causale_operazione 	|	deposito|	cross_external_code |csd_sgss	|	piazza_movimento_cad|	borsa_titolo_cad|	flag_tardive|	flag_repatriation	|	flag_repair	|	num_rep_cli	|	flusso_ttit	|	paese_fatt	|
+									|REGO         |OTC          |                       |			 |						|			|	T2SFOREIGN			|			|	160					|					|				|						|				|				|				|	EUR			|
+E il superNDG 123456
+E il periodo 01-19
+E i criteri 
+|Tipo|Periodo	 | SuperNDG         |activity_code|	channel_code|	process_channel_code|mkt_prov 	 |	causale_operazione 	|	deposito|	cross_external_code 	|csd_sgss	|	piazza_movimento_cad	|	borsa_titolo_cad|	flag_tardive|	flag_repatriation	|	flag_repair	|	num_rep_cli	|	flusso_ttit	|	paese_fatt	| Prezzo |
+|Base|01-19      |123456            |!=CANC       |IN(OTC,O2C)  |                       |!=CLIENTE	 |						|			|	IN(T2SFOREIGN,FOREIGN)	|			|	!IN(140,150)			|					|				|						|				|				|				|	!IN(ESP,GR)	|2       |
+|Base|01-19      |123456            |!=REGO       |OTC          |                       |			 |						|			|	T2SFOREIGN				|			|	!IN(140,150)			|					|				|						|				|				|				|	IN(EUR,GR)	|21      |
+Quando l'utente chiede di conoscere la Fee per il Volume specificato
+Allora otterrà la Fee con valore 2
+
